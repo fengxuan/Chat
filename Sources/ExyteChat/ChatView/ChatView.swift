@@ -37,6 +37,7 @@ public struct ChatView<MessageContent: View, InputViewContent: View>: View {
 
     /// User and MessageId
     public typealias TapAvatarClosure = (User, String) -> ()
+    public typealias DeleteMessageClosure = (Message) -> ()
 
     @Environment(\.safeAreaInsets) private var safeAreaInsets
     @Environment(\.chatTheme) private var theme
@@ -64,6 +65,7 @@ public struct ChatView<MessageContent: View, InputViewContent: View>: View {
     var messageUseMarkdown: Bool = false
     var showMessageMenuOnLongPress: Bool = true
     var tapAvatarClosure: TapAvatarClosure?
+    var deleteMessageClosure: DeleteMessageClosure?
     var mediaPickerSelectionParameters: MediaPickerParameters?
     var orientationHandler: MediaPickerOrientationHandler = {_ in}
     var chatTitle: String?
@@ -347,7 +349,13 @@ public struct ChatView<MessageContent: View, InputViewContent: View>: View {
         case .reply:
             inputViewModel.attachments.replyMessage = row.message.toReplyMessage()
             globalFocusState.focus = .uuid(inputFieldId)
+            
+        case .delete:
+            //call delete method
+            print(row.message)
+            deleteMessageClosure!(row.message)
         }
+     
     }
 }
 
@@ -432,6 +440,12 @@ public extension ChatView {
     func tapAvatarClosure(_ closure: @escaping TapAvatarClosure) -> ChatView {
         var view = self
         view.tapAvatarClosure = closure
+        return view
+    }
+    
+    func deleteMessageClosure(_ closure: @escaping DeleteMessageClosure) -> ChatView {
+        var view = self
+        view.deleteMessageClosure = closure
         return view
     }
 
