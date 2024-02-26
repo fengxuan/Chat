@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "Chat_FX"
-  s.version          = "1.0.1"
+  s.version          = "1.0.2"
   s.summary          = "Chat with fully customizable message cells and built-in media picker written with SwiftUI"
 
   s.homepage         = 'https://github.com/fengxuan/Chat.git'

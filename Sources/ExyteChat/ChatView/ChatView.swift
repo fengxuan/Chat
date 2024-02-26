@@ -451,6 +451,12 @@ public extension ChatView {
         view.deleteMessageClosure = closure
         return view
     }
+    
+    func reportMessageClosure(_ closure: @escaping ReportMessageClosure) -> ChatView {
+        var view = self
+        view.reportMessageClosure = closure
+        return view
+    }
 
     func assetsPickerLimit(assetsPickerLimit: Int) -> ChatView {
         var view = self
