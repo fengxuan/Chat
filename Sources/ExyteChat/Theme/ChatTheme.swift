@@ -147,6 +147,7 @@ public struct ChatTheme {
             public var retry: Image
             public var save: Image
             public var select: Image
+            public var report: Image
         }
 
         public struct RecordAudio {
@@ -213,6 +214,7 @@ public struct ChatTheme {
             retry: Image? = nil,
             save: Image? = nil,
             select: Image? = nil,
+            report: Image? = nil,
             cancelRecord: Image? = nil,
             deleteRecord: Image? = nil,
             lockRecord: Image? = nil,
@@ -279,7 +281,8 @@ public struct ChatTheme {
                 reply: reply ?? Image("reply", bundle: .current),
                 retry: retry ?? Image("retry", bundle: .current),
                 save: save ?? Image("save", bundle: .current),
-                select: select ?? Image("select", bundle: .current)
+                select: select ?? Image("select", bundle: .current),
+                report: report ?? Image(systemName: "exclamationmark.circle")
             )
 
             self.recordAudio = RecordAudio(

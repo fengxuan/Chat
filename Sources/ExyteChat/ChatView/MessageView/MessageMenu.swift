@@ -12,6 +12,7 @@ import enum FloatingButton.Alignment
 enum MessageMenuAction {
     case reply
     case delete
+    case report
 }
 
 struct MessageMenu<MainButton: View>: View {
@@ -29,7 +30,8 @@ struct MessageMenu<MainButton: View>: View {
     var body: some View {
         FloatingButton(mainButtonView: mainButton().allowsHitTesting(false), buttons: [
             menuButton(title: "Reply", icon: theme.images.messageMenu.reply, action: .reply),
-            menuButton(title: "Delete", icon: theme.images.messageMenu.delete, action: .delete)
+            menuButton(title: "Delete", icon: theme.images.messageMenu.delete, action: .delete),
+            menuButton(title: "Report", icon: theme.images.messageMenu.report, action: .delete)
         ], isOpen: $isShowingMenu)
         .straight()
         //.mainZStackAlignment(.top)

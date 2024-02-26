@@ -38,6 +38,7 @@ public struct ChatView<MessageContent: View, InputViewContent: View>: View {
     /// User and MessageId
     public typealias TapAvatarClosure = (User, String) -> ()
     public typealias DeleteMessageClosure = (Message) -> ()
+    public typealias ReportMessageClosure = (Message) -> ()
 
     @Environment(\.safeAreaInsets) private var safeAreaInsets
     @Environment(\.chatTheme) private var theme
@@ -66,6 +67,7 @@ public struct ChatView<MessageContent: View, InputViewContent: View>: View {
     var showMessageMenuOnLongPress: Bool = true
     var tapAvatarClosure: TapAvatarClosure?
     var deleteMessageClosure: DeleteMessageClosure?
+    var reportMessageClosure: ReportMessageClosure?
     var mediaPickerSelectionParameters: MediaPickerParameters?
     var orientationHandler: MediaPickerOrientationHandler = {_ in}
     var chatTitle: String?
@@ -352,8 +354,9 @@ public struct ChatView<MessageContent: View, InputViewContent: View>: View {
             
         case .delete:
             //call delete method
-            print(row.message)
-            deleteMessageClosure!(row.message)
+            deleteMessageClosure?(row.message)
+        case .report:
+            reportMessageClosure?(row.message)
         }
      
     }
