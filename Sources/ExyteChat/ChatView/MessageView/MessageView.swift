@@ -99,6 +99,12 @@ struct MessageView: View {
                                 .frame(width: 2)
                         }
                 }
+                if !message.user.isCurrentUser {
+                    Text(message.user.name.prefix(20)).font(.caption2)
+                        .foregroundColor(theme.colors.buttonBackground)
+                        .font(.system(size: 6))
+                        .padding(.trailing, 12)
+                }
                 bubbleView(message)
             }
 
