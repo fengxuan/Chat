@@ -93,6 +93,8 @@ public struct ChatView<MessageContent: View, InputViewContent: View>: View {
     @State private var menuBgOpacity: CGFloat = 0
     @State private var menuCellOpacity: CGFloat = 0
     @State private var menuScrollView: UIScrollView?
+    
+    @State private var showMenuAtBottom = true
 
     public init(messages: [Message],
                 didSendMessage: @escaping (DraftMessage) -> Void,
@@ -281,6 +283,7 @@ public struct ChatView<MessageContent: View, InputViewContent: View>: View {
         MessageMenu(
             isShowingMenu: $isShowingMenu,
             menuButtonsSize: $menuButtonsSize,
+            showMenuAtBottom: $showMenuAtBottom,
             alignment: row.message.user.isCurrentUser ? .right : .left,
             leadingPadding: avatarSize + MessageView.horizontalAvatarPadding * 2,
             trailingPadding: MessageView.statusViewSize + MessageView.horizontalStatusPadding) {
@@ -300,8 +303,19 @@ public struct ChatView<MessageContent: View, InputViewContent: View>: View {
             let wholeMenuHeight = menuButtonsSize.height + cellFrame.height
             let needsScrollTemp = wholeMenuHeight > UIScreen.main.bounds.height - safeAreaInsets.top - safeAreaInsets.bottom
 
+            //print("cellFrame.minY : \(cellFrame.midX) \(cellFrame.minY)")
             menuCellPosition = CGPoint(x: cellFrame.midX, y: cellFrame.minY + wholeMenuHeight/2 - safeAreaInsets.top)
             menuCellOpacity = 1
+            
+            var checkShowMenuAtButtom = true;
+            
+            if cellFrame.midY > 600 {
+                checkShowMenuAtButtom = false
+            }else if cellFrame.midY < 250 {
+                checkShowMenuAtButtom = true
+            }else{
+                checkShowMenuAtButtom = true
+            }
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
                 var finalCellPosition = menuCellPosition
@@ -316,6 +330,7 @@ public struct ChatView<MessageContent: View, InputViewContent: View>: View {
                     menuBgOpacity = 0.9
                     menuCellPosition = finalCellPosition
                     isShowingMenu = true
+                    showMenuAtBottom = checkShowMenuAtButtom
                 }
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {

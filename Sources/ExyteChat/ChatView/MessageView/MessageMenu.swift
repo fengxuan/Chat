@@ -21,6 +21,7 @@ struct MessageMenu<MainButton: View>: View {
 
     @Binding var isShowingMenu: Bool
     @Binding var menuButtonsSize: CGSize
+    @Binding var showMenuAtBottom: Bool
     var alignment: Alignment
     var leadingPadding: CGFloat
     var trailingPadding: CGFloat
@@ -36,7 +37,7 @@ struct MessageMenu<MainButton: View>: View {
         .straight()
         //.mainZStackAlignment(.top)
         .initialOpacity(0)
-        .direction(.bottom)
+        .direction(showMenuAtBottom ? .bottom : .top)
         .alignment(alignment)
         .spacing(2)
         .animation(.linear(duration: 0.2))
